@@ -82,8 +82,3 @@ El router crea una red interna sin restricciones. El ESP y la PC quedan libres p
 
 ---
 
-## **6. Frase corta para presentar al profesor**
-
-> “El dispositivo está funcionando, pero la red de la facultad bloquea el puerto TCP 3232 y el tráfico multicast necesario para OTA. Por eso el ESP32 aparece online pero no puede recibir firmware por WiFi. Con USB o una red sin filtrado, la actualización funciona normalmente.”
-
----
