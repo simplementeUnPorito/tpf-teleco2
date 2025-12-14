@@ -1,6 +1,7 @@
 # **Home Assistant**
 
 Home Assistant se utiliza como **servidor central de automatización e integración IoT** del proyecto. Corre dentro de un **contenedor Docker** en la PC servidor de la facultad.
+
 ---
 
 ## 🖥️ Consideración sobre instalación nativa (Home Assistant OS)
