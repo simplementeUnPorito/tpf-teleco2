@@ -146,17 +146,5 @@ Cada carpeta contiene su propio `README.md` con detalles específicos de uso.
 
 ---
 
-## 🎓 Uso académico
-
-Este repositorio está pensado como:
-
-* Base común para el TP 2025
-* Referencia técnica para futuros semestres
-* Ejemplo de infraestructura IoT documentada y reproducible
-
-El enfoque prioriza **criterio de diseño, seguridad y claridad**, por sobre soluciones ad-hoc o configuraciones dependientes del estado del sistema.
-
----
-
 **Versión del documento:** 1.1
 
