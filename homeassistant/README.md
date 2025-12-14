@@ -1,6 +1,30 @@
 # **Home Assistant**
 
 Home Assistant se utiliza como **servidor central de automatización e integración IoT** del proyecto. Corre dentro de un **contenedor Docker** en la PC servidor de la facultad.
+---
+
+## 🖥️ Consideración sobre instalación nativa (Home Assistant OS)
+
+Durante la etapa inicial del proyecto se evaluó la posibilidad de instalar
+**Home Assistant OS de forma nativa** en una PC dedicada, con el objetivo de
+simplificar la administración y prescindir del uso de Docker.
+
+Sin embargo, esta alternativa **no pudo implementarse** debido a limitaciones
+de hardware de la PC adquirida:
+
+- El equipo **no cuenta con firmware UEFI**
+- Home Assistant OS requiere **UEFI** para su instalación y arranque nativo
+- El sistema solo soporta modo **BIOS / Legacy**, incompatible con HAOS
+
+Debido a esta restricción, se decidió **descartar la instalación nativa** y
+optar por una solución basada en **Docker sobre Ubuntu**, la cual resultó:
+
+- Totalmente compatible con el hardware disponible
+- Más flexible para depuración y acceso por SSH
+- Adecuada para un entorno académico y colaborativo
+
+Esta decisión permitió continuar el proyecto sin depender de un cambio de
+hardware y manteniendo control total sobre el sistema operativo base.
 
 La configuración persistente se almacena en el host en la ruta:
 
