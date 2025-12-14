@@ -150,18 +150,6 @@ Dentro de la carpeta también se incluyen sketches de Arduino utilizados como **
 
 Estos sketches **no forman parte del sistema final**, pero fueron esenciales para obtener los datos que luego se integraron en ESPHome.
 
----
-
-## 🎓 Valor académico
-
-Esta carpeta refleja una parte clave del trabajo de ingeniería:
-
-* Experimentación
-* Validación
-* Procesamiento de datos
-* Integración con sistemas de mayor nivel
-
-No todo el código termina en producción, pero **todo aporta al diseño final**.
 
 ---
 
