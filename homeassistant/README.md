@@ -216,17 +216,7 @@ No es necesario editar manualmente archivos de configuración para esta integrac
 
 ---
 
-## 🎓 Uso académico
 
-La integración Home Assistant + ESPHome permite:
-
-* Validar rápidamente sensores y actuadores
-* Centralizar la lógica de automatización
-* Separar claramente hardware, firmware y lógica de control
-
-Este enfoque favorece el trabajo modular y la reutilización de desarrollos entre distintos grupos.
-
----
 
 **Versión del documento:** 1.1
 
