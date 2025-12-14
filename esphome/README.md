@@ -205,21 +205,9 @@ Existen soluciones más robustas que podrían adoptarse en futuras iteraciones d
 
 Estas opciones mejoran escalabilidad y control, pero requieren coordinación con la infraestructura de red de la facultad.
 
----
-
-## 🎓 Uso académico
-
-ESPHome permite a los estudiantes:
-
-* Enfocarse en la lógica del dispositivo sin escribir firmware desde cero
-* Iterar rápidamente sobre sensores y actuadores
-* Integrar de forma directa con Home Assistant
-* Comprender problemas reales de redes, descubrimiento y despliegue
-
-El enfoque adoptado prioriza **robustez y reproducibilidad**, incluso frente a limitaciones de red reales.
 
 ---
-# **ESPHome – Estructura del archivo YAML**
+# **Estructura del archivo YAML**
 
 Este documento explica la **estructura general de un archivo de configuración ESPHome** utilizado en el proyecto, tomando como ejemplo un nodo real desplegado durante el semestre.
 
@@ -453,23 +441,6 @@ Este enfoque permitió:
 * Controlar el aire acondicionado sin depender de bases de datos externas
 * Adaptarse a marcas no soportadas
 * Comprender el protocolo IR a bajo nivel
-
----
-
-## 🎓 Conclusión académica
-
-Esta estructura YAML:
-
-* Favorece la reutilización
-* Separa claramente hardware, lógica y calibración
-* Refleja decisiones de diseño reales
-* Expone problemas y soluciones de ingeniería práctica
-
-Se recomienda usarla como **plantilla base** para nuevos nodos del proyecto.
-
----
-
-**Versión del documento:** 1.0
-
+--- 
 **Versión del documento:** 1.1
 
