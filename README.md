@@ -1,157 +1,162 @@
 # **TPF – Telecomunicaciones II (2025)**
 
-## **Infraestructura IoT Multiplataforma – DEI/LED**
+## **Infraestructura IoT Base – DEI/LED**
 
-### Universidad Católica “Nuestra Señora de la Asunción”
-
+**Universidad Católica “Nuestra Señora de la Asunción”**
 Facultad de Ciencias y Tecnologías
 Departamento de Ingeniería Electrónica e Informática
 
 ---
 
-## **🎯 Objetivo del Proyecto**
+## 🎯 Objetivo del Proyecto
 
-Este proyecto tiene como finalidad **diseñar, implementar y documentar** una infraestructura IoT completa utilizando:
+Este repositorio documenta y centraliza la **infraestructura base** utilizada en el Trabajo Práctico Final de **Telecomunicaciones II (2025)**.
 
-* **Home Assistant** como servidor central
-* **ESPHome** para sensores y actuadores WiFi
-* **Redes WSN** basadas en CTP *(postergado según indicación del profesor)*
-* **LoRa / LoRaWAN** *(parcialmente postergado)*
-* **MQTT, Grafana, InfluxDB y Telegraf** para telemetría *(según tareas asignadas)*
-* Acceso remoto seguro mediante **VPN Tailscale**
+El objetivo principal es **diseñar, desplegar y mantener un servidor IoT reproducible**, que permita a los estudiantes:
 
-El servidor principal se encuentra en una PC de la facultad y los estudiantes pueden acceder de forma remota mediante Tailscale para desarrollar, integrar y probar cada componente del sistema.
+* Desarrollar y probar sensores y actuadores
+* Integrar distintos protocolos de comunicación
+* Trabajar de forma colaborativa y remota
+* Utilizar una base común estandarizada para prácticas de laboratorio
 
-Este repositorio centraliza **todo el código, documentación y configuraciones**.
-
----
-
-# **👥 Integrantes y distribución de tareas**
-
-A continuación se presenta la tabla oficial de distribución de tareas del proyecto, basada en el documento entregado por el profesor. Se incluyen todos los módulos, tecnologías, cantidades, cargas de trabajo y responsables.
-
-| Layer/Scope | Technology                    | Tarea                                          | Qty | Workload | Elías | Joel | Matías | Tania | Erick | Available |
-| ----------- | ----------------------------- | ---------------------------------------------- | --- | -------- | ----- | ---- | ------ | ----- | ----- | --------- |
-| APP         | WSN                           | Sensor de Temperatura/Humedad en aula          | 10  | 15       | 3     | 3    | 3      |       | 1     | 1         |
-| APP         | Lora                          | Sensor de presencia/cruce/apertura             | 5   | 10       |       | 1    |        |       | 4     |           |
-| APP         | Lora                          | Sensor de luz                                  | 2   | 10       |       |      |        | 1     | 1     |           |
-| APP         | Lora                          | Sensor de humedad del suelo                    | 2   | 10       |       |      |        | 1     | 1     |           |
-| APP         | WIFI Telegraf-Influx          | Sensor de humedad del suelo                    | 2   | 15       |       |      | 1      |       | 1     | 0         |
-| APP         | WIFI ESP Home                 | Sensor de luz                                  | 4   | 15       | 1     | 1    | 1      |       | 1     | 0         |
-| APP         | WIFI-HomeAssistant            | Actuador Emisor infrarrojo para controlar AACC | 2   | 30       | 1     |      | 1      |       |       | 0         |
-| APP         | WIFI-HomeAssistant            | Actuador…                                      | 2   | 15       |       |      | 2      |       |       | 0         |
-| APP         | WIFI-HomeAssistant            | Actuador Dispensador Spray                     | 2   | 15       |       |      |        | 1     | 1     |           |
-| APP         | WIFI-MQTT                     | Actuador Emisor infrarrojo para controlar AACC | 2   | 30       |       |      |        |       | 2     |           |
-| APP         | WIFI-MQTT                     | Actuador Dispensador Spray                     | 2   | 15       |       |      |        |       | 2     |           |
-| APP         | WIFI-MQTT                     | Actuador…                                      | 2   | 15       |       |      |        |       | 2     |           |
-| MAC         | WSN                           | CTP para recolección de datos                  | 1   | 20       | 1     |      |        |       |       | 0         |
-| MAC         | WSN                           | Flooding Protocol por downlink comm            | 1   | 20       |       | 1    |        |       |       | 0         |
-| FIS         | WSN-WIFI                      | WSN2MQTT Gateway                               | 2   | 30       |       |      | 1      |       | 1     | 0         |
-| FIS         | WSN-LORA                      | WSN2LORA Gateway                               | 2   | 30       |       | 1    | 1      |       |       | 0         |
-| FIS         | LORAWAN-TTN                   | LORAWAN Gateway                                | 0   | 20       |       |      |        |       |       | 0         |
-| SERVERS     | Telegraf + Grafana + InfluxDB | —                                              | 1   | 30       |       |      |        |       | 1     | 0         |
-| SERVERS     | HomeAssistant                 | —                                              | 2   | 30       | 1     |      |        |       | 1     | 0         |
-| SERVERS     | Mosquitto                     | MQTT Broker                                    | 1   | 25       |       |      |        |       | 1     |           |
----
-
-# **🖥️ Servidor IoT de la Facultad**
-
-El servidor corre:
-
-* **Ubuntu 24.04**
-* **Home Assistant en Docker**
-* **ESPHome en Docker**
-* **OpenSSH Server**
-* **VPN Tailscale**
-
-Esto permite:
-
-✔ Acceso remoto sin abrir puertos
-✔ Desarrollo colaborativo entre todos los estudiantes
-✔ Integración centralizada de sensores y actuadores
-✔ Estandarización para pruebas de laboratorio
+> ⚠️ **Este repositorio NO es un backup del servidor.**
+> Contiene únicamente configuraciones, scripts y documentación necesarios para **recrear el entorno**, no su estado en ejecución.
 
 ---
 
-# **🔐 Acceso remoto mediante Tailscale**
+## 🖥️ Servidor IoT de la Facultad
 
-Tailscale crea una VPN mesh segura basada en WireGuard. Cada dispositivo del equipo se conecta a la misma red virtual.
+El servidor físico se encuentra en una PC dedicada dentro de la facultad y corre:
 
-## **1️⃣ Crear una cuenta**
+* **Ubuntu 24.04 LTS**
+* **Docker** como plataforma de contenedores
+* **OpenSSH Server** para administración remota
+* **VPN Tailscale** para acceso seguro desde redes externas
 
-Ingresar a: [https://tailscale.com](https://tailscale.com)
-Registrarse con Google / GitHub / Microsoft.
+Este enfoque permite:
 
-## **2️⃣ Aceptar invitación del administrador**
+✔ Acceso remoto sin abrir puertos en el router
+✔ Trabajo desde casa de manera segura
+✔ Un único punto de integración para todos los módulos del TP
+✔ Reproducibilidad del entorno en futuros semestres
 
-Uno de los integrantes enviará el "invite link" del proyecto.
-Al aceptarlo, tu dispositivo queda autorizado.
+---
 
-## **3️⃣ Instalar Tailscale**
+## 🔐 Acceso por SSH al servidor
 
-En Linux:
+El acceso administrativo al servidor se realiza mediante **SSH**.
 
+### Instalación del servidor SSH
+
+En una instalación limpia de Ubuntu, basta con ejecutar:
+
+```bash
+sudo apt update
+sudo apt install openssh-server
 ```
+
+El servicio queda activo automáticamente. Para verificar:
+
+```bash
+systemctl status ssh
+```
+
+### Conexión al servidor
+
+Desde cualquier cliente:
+
+```bash
+ssh user@[IP_DEL_SERVIDOR]
+```
+
+Ejemplo usando IP asignada por Tailscale:
+
+```bash
+ssh user@100.109.64.19
+```
+
+> ⚠️ **Buenas prácticas:**
+> En este proyecto se evita exponer el puerto SSH a Internet.
+> El acceso remoto se realiza exclusivamente a través de la VPN Tailscale.
+
+---
+
+## 🌐 Acceso remoto mediante Tailscale (VPN)
+
+Para permitir el trabajo remoto desde redes domésticas sin abrir puertos, el proyecto utiliza **Tailscale**, una VPN mesh basada en **WireGuard**.
+
+### ¿Por qué Tailscale?
+
+* No requiere configuración de NAT o port forwarding
+* Funciona detrás de routers domésticos y redes móviles
+* Cada integrante se autentica con su propia identidad
+* El servidor no queda expuesto públicamente
+
+### Instalación
+
+Crear una cuenta en:
+
+👉 [https://tailscale.com](https://tailscale.com)
+
+Instalar Tailscale en cada dispositivo:
+
+* **Linux**:
+
+```bash
 curl -fsSL https://tailscale.com/install.sh | sh
 ```
 
-En Windows / Android / iOS:
-Descargar desde [https://tailscale.com/download](https://tailscale.com/download).
+* **Windows / macOS / Android / iOS**:
+  [https://tailscale.com/download](https://tailscale.com/download)
 
-## **4️⃣ Levantar la VPN**
+### Activar la VPN
 
-```
+```bash
 sudo tailscale up
 ```
 
-## **5️⃣ Ver la IP del servidor y los compañeros**
+### Visualización de dispositivos
 
-En el panel web de Tailscale:
-[https://login.tailscale.com/admin/machines](https://login.tailscale.com/admin/machines)
+Desde el panel web:
 
-Ahí se puede ver:
+👉 [https://login.tailscale.com/admin/machines](https://login.tailscale.com/admin/machines)
+
+Se puede ver:
 
 * IP Tailscale del servidor
-* IPs de cada compañero
-* Estado (online/offline)
+* IPs de cada integrante
+* Estado de conexión (online/offline)
 
 ---
 
-# **🌐 Acceso al Home Assistant**
+## 📂 Organización del repositorio
 
-En un navegador web:
+El repositorio se organiza por módulos, cada uno con su propia documentación:
 
-```
-http://[IP_TAILSCALE_DEL_SERVIDOR]:8123
-```
+* **`homeassistant/`**
+  Configuración reproducible del servidor Home Assistant (Docker).
 
-Ejemplo:
+* **`esphome/`**
+  Configuración de nodos ESPHome y entorno de compilación (Docker).
 
-```
-http://100.109.64.19:8123
-```
+* **`Scripts/`**
+  Scripts y herramientas auxiliares utilizadas durante el desarrollo y las pruebas.
+
+Cada carpeta contiene su propio `README.md` con detalles específicos de uso.
+
+---
+
+## 🎓 Uso académico
+
+Este repositorio está pensado como:
+
+* Base común para el TP 2025
+* Referencia técnica para futuros semestres
+* Ejemplo de infraestructura IoT documentada y reproducible
+
+El enfoque prioriza **criterio de diseño, seguridad y claridad**, por sobre soluciones ad-hoc o configuraciones dependientes del estado del sistema.
 
 ---
 
-# **💻 Acceso por SSH al servidor**
+**Versión del documento:** 1.1
 
-En terminal:
-
-```
-ssh [IP_DEL_SERVIDOR] -l user
-```
-
-Contraseña:
-
-```
-user
-```
-
-Ejemplo:
-
-```
-ssh 100.109.64.19 -l user
-```
-
----
-**Versión del documento:** 1.0
