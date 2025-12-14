@@ -1,0 +1,55 @@
+############################
+# ESPHome
+############################
+esphome/.esphome/
+esphome/build/
+esphome/*.bin
+esphome/*.elf
+esphome/.pioenvs/
+esphome/.piolibdeps/
+
+############################
+# Home Assistant
+############################
+homeassistant/.storage/
+homeassistant/home-assistant_v2.db
+homeassistant/home-assistant.log
+homeassistant/secrets.yaml
+homeassistant/backups/
+homeassistant/tts/
+homeassistant/logs/
+
+homeassistant/.ha_run.lock
+homeassistant/home-assistant*.db*
+homeassistant/home-assistant*.log*
+homeassistant/.storage/
+
+############################
+# Docker / Runtime
+############################
+**/data/
+**/volumes/
+**/*.db
+**/*.log
+
+############################
+# Env / secrets
+############################
+.env
+*.env
+
+############################
+# OS / Editors
+############################
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+
+############################
+# Python / misc
+############################
+__pycache__/
+*.pyc

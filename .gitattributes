@@ -1,0 +1,23 @@
+# Normalizar finales de línea
+* text=auto
+
+# Archivos de configuración
+*.yml  text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.toml text eol=lf
+*.ini  text eol=lf
+
+# Scripts
+*.sh   text eol=lf
+
+# Markdown
+*.md   text eol=lf
+
+# Binarios
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.bin  binary
+*.zip  binary

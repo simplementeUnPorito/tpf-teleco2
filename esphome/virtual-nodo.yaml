@@ -1,0 +1,64 @@
+esphome:
+  name: virtual-nodo
+  friendly_name: virtual-nodo
+
+esp8266:
+  board: esp01_1m
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "eENcTO9DchZrnJsDC4hm3DPLe/xnRIvfma1X9LIHV+E="
+
+ota:
+  - platform: esphome
+    password: "9fd7e160b78d011522c9ea44b6c0236a"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Virtual-Nodo Fallback Hotspot"
+    password: "BXyWAiYNJHWi"
+  manual_ip: 
+    static_ip: 10.50.101.23
+    gateway: 10.50.0.1
+    subnet: 255.255.0.0
+
+
+captive_portal:
+
+
+
+# EL SENSOR VIRTUAL (Simulación de Telemetría)
+sensor:
+  # Genera un valor aleatorio entre 0 y 100
+  - platform: template
+    name: "Nodo Virtual - Valor Aleatorio"
+    unit_of_measurement: "unidades"
+    lambda: return random_float() * 100.0; # Genera un valor entre 0 y 100
+    update_interval: 10s
+    
+  # Sensor Secundario: Muestra el tiempo de actividad del nodo
+  - platform: uptime 
+    name: "Tiempo Activo del Nodo"
+    unit_of_measurement: "min"
+    update_interval: 60s
+
+# VARIABLES Y LÓGICA DE LA SIMULACIÓN
+globals:
+  - id: random_id 
+    type: float
+    restore_value: no
+    
+interval:
+  - interval: 10s 
+    then:
+      - lambda: id(random_id) = random();
+
+    

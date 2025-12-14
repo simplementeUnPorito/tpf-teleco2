@@ -1,0 +1,84 @@
+esphome:
+  name: copy_ir
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+logger:
+ota:
+  platform: esphome
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: "ESPHome Fallback"
+    password: "fallback1234"
+  manual_ip:
+    static_ip: 10.50.101.19
+    gateway: 10.50.0.1
+    subnet: 255.255.0.0
+ 
+
+api:
+  reboot_timeout: 0s
+    
+substitutions:
+  ldr_min_v: "0.150"   # Voltaje mínimo (oscuridad total) — AJUSTABLE
+  ldr_max_v: "2.45"    # Voltaje máximo (luz fuerte) — AJUSTABLE
+  avg_window: "10"    # Tamaño del moving average para TODO
+  Rref: "10000.0"   # resistencia fija del divisor (ohms)
+  k_param: "218254.5284788324"   # valor provisorio, mañana lo medimos
+  n_param: "2.9244174253917654"      # valor provisorio, mañana lo medimos
+
+
+###############################
+# ACTUADOR: IR TRANSMITTER
+###############################
+
+remote_receiver:
+  pin:
+    number: GPIO14
+    inverted: true
+  dump: all
+  tolerance: 30%
+
+remote_transmitter:
+  pin: GPIO25
+  carrier_duty_percent: 50%
+
+
+switch:
+  - platform: template
+    name: "IR Converted"
+    turn_on_action:
+      - remote_transmitter.transmit_raw:
+          code: [9050,-4350,
+                650,-1550,650,-1600,650,-450,650,-450,
+                650,-450,650,-450,650,-1550,650,-1600,
+                650,-1600,600,-1600,650,-1600,650,-450,
+                600,-500,600,-500,600,-500,600,-1600,
+                650,-450,650,-450,650,-450,650,-450,
+                650,-450,650,-1600,600,-1600,650,-1600,
+                650,-450,650,-450,600,-500,600,-500,
+                600,-500,600,-500,600,-500,600,-500,
+                600,-450,650,-450,650,-450,650,-450,
+                650,-450,650,-1600,650,-450,650,-1550,
+                650,-450,700,-400,650,-450,650,-450,
+                650,-450,650,-450,700,-400,650,-450,
+                650,-450,650,-450,650,-450,650,-450,
+                650,-450,650,-450,650,-1600,650,-450,
+                650,-450,650,-450,650,-450,650,-450,
+                650,-450,650,-450,650,-450,650,-450,
+                650,-450,650,-450,650,-450,650,-450,
+                650,-450,650,-450,650,-450,650,-450,
+                650,-450,650,-450,650,-450,650,-450,
+                650,-450,650,-1550,650,-450,650,-450,
+                650,-450,650,-450,650,-450,650,-450,
+                650,-450,650,-450,650,-450,650,-450,
+                650,-1600,650,-450,650,-1550,650,-450,
+                650,-450,650,-450,650,-450,650,-450,
+                650,-1600,600,-1600,650]
+          carrier_frequency: 38000

@@ -1,0 +1,171 @@
+esphome:
+  name: aula_sensors
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+logger:
+ota:
+  platform: esphome
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: "ESPHome Fallback"
+    password: "fallback1234"
+  manual_ip:
+    static_ip: 10.50.101.19
+    gateway: 10.50.0.1
+    subnet: 255.255.0.0
+ 
+
+api:
+  reboot_timeout: 0s
+    
+substitutions:
+  ldr_min_v: "0.150"   # Voltaje mínimo (oscuridad total) — AJUSTABLE
+  ldr_max_v: "2.45"    # Voltaje máximo (luz fuerte) — AJUSTABLE
+  avg_window: "10"    # Tamaño del moving average para TODO
+  Rref: "10000.0"   # resistencia fija del divisor (ohms)
+  k_param: "218254.5284788324"   # valor provisorio, mañana lo medimos
+  n_param: "2.9244174253917654"      # valor provisorio, mañana lo medimos
+
+
+###############################
+# SENSOR DHT22 (AM2302)
+###############################
+sensor:
+  - platform: dht
+    pin: 4
+    model: AM2302
+    temperature:
+      name: "Aula Temperatura"
+      id: temp_aula
+      filters:
+        - sliding_window_moving_average:
+            window_size: ${avg_window}
+            send_every: 1
+    humidity:
+      name: "Aula Humedad"
+      id: hum_aula
+      filters:
+        - sliding_window_moving_average:
+            window_size: ${avg_window}
+            send_every: 1
+    update_interval: 1s
+
+ ###############################
+  # ADC RAW (SIN FILTRO)
+  ###############################
+  - platform: adc
+    pin: 34
+    id: ldr_raw
+    name: "LDR ADC Raw"
+    attenuation: 11db
+    raw: true
+    update_interval: 1s
+    internal: true     # oculta del HA
+    unit_of_measurement: ""
+
+  ###############################
+  # VOLTAJE REAL (ÚNICO FILTRADO)
+  ###############################
+  - platform: template
+    name: "LDR Voltaje Real"
+    id: ldr_voltage
+    unit_of_measurement: "V"
+    update_interval: 1s
+
+    lambda: |-
+      float raw = id(ldr_raw).state;
+
+      float Vmin = atof("${ldr_min_v}");
+      float Vmax = atof("${ldr_max_v}");
+
+      //float V = Vmin + raw * ((Vmax - Vmin) / 4095.0);
+      float V = raw/1000;
+      if (V < Vmin) V = Vmin;
+      if (V > Vmax) V = Vmax;
+
+      return V;
+
+    filters:
+      - sliding_window_moving_average:
+          window_size: ${avg_window}
+          send_every: 1
+
+  ###############################
+  # LUX (SIN FILTRO—HEREDA EL SUAVIZADO DEL VOLTAJE)
+  ###############################
+  - platform: template
+    name: "Luz Aula (Lux)"
+    id: luz_aula_lux
+    unit_of_measurement: "lx"
+    update_interval: 1s
+
+    lambda: |-
+      float V = id(ldr_voltage).state;
+
+      if (isnan(V)) return 0.0;
+
+      float Vmin = atof("${ldr_min_v}");
+      float Vmax = atof("${ldr_max_v}");
+
+      float Rref = atof("${Rref}");
+      float k = atof("${k_param}");
+      float n = atof("${n_param}");
+
+      if (V < Vmin) V = Vmin;
+      if (V > Vmax) V = Vmax;
+
+      float inner = Vmax / V - 1.0;
+      if (inner <= 0.0) return 0.0;
+
+      float logLux = (log(k) - log(Rref) - log(inner)) / n;
+      float lux = exp(logLux);
+
+      if (!isnan(lux) && lux >= 0.0 && lux < 50000.0)
+        return lux;
+
+      return 0.0;
+
+
+
+
+remote_receiver:
+  pin:
+    number: GPIO14
+    inverted: true
+  dump: raw
+  tolerance: 55%
+
+
+remote_transmitter:
+  pin: GPIO25
+  carrier_duty_percent: 50%
+
+
+switch:
+  - platform: template
+    name: "AC Power"
+    id: ac_power
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_OFF
+
+    turn_on_action:
+      - remote_transmitter.transmit_raw:
+          carrier_frequency: 38028
+          code: [
+            9059, -4465, 586, -1661, 586, -1661, 586, -523, 587, -524, 586, -524, 586, -524, 586, -1661, 587, -1660, 587, -1660, 586, -1660, 587, -1660, 587, -523, 587, -523, 587, -523, 586, -524, 586, -1660, 587, -525, 585, -524, 587, -523, 587, -523, 586, -523, 587, -1660, 587, -1659, 586, -1661, 587, -524, 585, -525, 585, -525, 586, -524, 586, -524, 585, -524, 586, -524, 587, -524, 586, -523, 587, -523, 586, -524, 587, -522, 587, -525, 585, -1660, 586, -525, 585, -1661, 586, -523, 587, -524, 587, -523, 585, -525, 586, -523, 587, -522, 587, -524, 586, -524, 586, -524, 586, -523, 587, -523, 586, -523, 587, -523, 587, -524, 585, -1661, 586, -524, 586, -524, 586, -524, 586, -524, 586, -524, 586, -523, 587, -523, 586, -524, 586, -524, 586, -523, 588, -523, 586, -523, 586, -524, 586, -524, 587, -522, 586, -524, 587, -523, 586, -524, 586, -524, 586, -524, 587, -522, 587, -523, 586, -1661, 586, -524, 586, -524, 586, -524, 586, -523, 587, -523, 586, -524, 586, -524, 586, -524, 586, -524, 585, -524, 586, -1661, 587, -523, 586, -1661, 585, -524, 587, -523, 586, -524, 586, -524, 586, -523, 587, -1660, 586, -1661, 586, -1661, 586, -1660, 586, -525, 585, -1661, 586, -524, 585, -525, 586
+          ]
+
+    turn_off_action:
+      - remote_transmitter.transmit_raw:
+          carrier_frequency: 38028
+          code: [
+           9083, -4441, 559, -1688, 557, -1690, 558, -552, 557, -553, 558, -552, 558, -553, 556, -1689, 558, -1690, 558, -1689, 557, -1689, 559, -1688, 559, -551, 558, -552, 558, -553, 558, -551, 558, -1689, 558, -552, 557, -553, 558, -552, 558, -553, 557, -552, 558, -1688, 558, -1689, 558, -1689, 558, -552, 558, -552, 558, -552, 558, -552, 557, -553, 556, -554, 557, -553, 557, -552, 557, -554, 557, -553, 556, -554, 555, -555, 556, -553, 556, -1691, 557, -552, 556, -1692, 554, -555, 555, -555, 555, -555, 554, -556, 555, -555, 554, -556, 554, -556, 555, -555, 554, -556, 554, -556, 554, -556, 553, -557, 554, -556, 553, -556, 554, -1693, 554, -556, 554, -555, 555, -555, 555, -555, 555, -555, 554, -556, 554, -556, 554, -555, 555, -556, 554, -556, 553, -556, 555, -555, 554, -556, 554, -556, 554, -556, 553, -557, 553, -556, 555, -555, 554, -555, 555, -555, 554, -557, 554, -555, 554, -556, 554, -556, 553, -556, 554, -556, 554, -556, 554, -556, 554, -556, 554, -556, 553, -557, 553, -557, 553, -556, 554, -1693, 553, -557, 553, -1693, 554, -556, 553, -557, 553, -556, 554, -556, 554, -556, 554, -1692, 554, -1693, 553, -1693, 553, -1693, 554, -556, 554, -556, 554, -556, 554, -555, 554
+          ]
+

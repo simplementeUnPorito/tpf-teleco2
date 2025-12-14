@@ -1,0 +1,32 @@
+esphome:
+  name: testxd
+  friendly_name: testXD
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "GYrvMRMj0RajfpsSA+bnZOtn6yiNXDG5kkd+Ge4yrNg="
+
+ota:
+  - platform: esphome
+    password: "c3bbcfd3ca72cfa241bb8227d7252f7a"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Testxd Fallback Hotspot"
+    password: "2yTcuZcEhhzG"
+
+captive_portal:
+    
