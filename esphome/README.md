@@ -68,14 +68,64 @@ El acceso es posible desde:
 
 ---
 
-## 📝 Consideraciones sobre flasheo por USB
+## 🔌 Flasheo del ESP (primer upload)
 
-Para flashear un dispositivo por USB:
+El **primer flasheo** de un dispositivo ESP (ESP32 / ESP8266) **debe realizarse obligatoriamente por USB**. A partir de ese primer upload, todas las actualizaciones posteriores pueden realizarse **vía OTA (Over-The-Air)** de forma inalámbrica.
 
-* El ESP **debe estar físicamente conectado** a la máquina donde corre el contenedor ESPHome
-* No es posible flashear por USB un dispositivo conectado a otra PC
+Existen **dos formas válidas** de realizar este flasheo inicial en el contexto del proyecto:
 
-Una vez flasheado por USB, los siguientes uploads pueden realizarse **vía OTA** (Over-The-Air).
+---
+
+### 🖥️ Opción 1: Flasheo directo desde el servidor de la facultad
+
+Esta opción se utiliza cuando el ESP está **conectado físicamente por USB** a la PC servidor donde corre el contenedor ESPHome.
+
+**Procedimiento:**
+
+1. Conectar el ESP por USB al servidor
+2. Acceder al panel de ESPHome del servidor
+3. Compilar y flashear el nodo directamente desde el dashboard
+
+Este método:
+
+* Es el más directo
+* No requiere herramientas adicionales
+* Depende de la disponibilidad física del servidor
+
+---
+
+### 💻 Opción 2: Flasheo desde tu PC personal (ESPHome Web)
+
+Si el ESP está conectado por USB a **tu propia PC** (por ejemplo, trabajando desde casa), el flasheo inicial se realiza mediante **ESPHome Web**.
+
+**Procedimiento:**
+
+1. Crear o compilar el proyecto ESPHome (en el servidor o localmente)
+2. Conectar el ESP por USB a tu PC
+3. Abrir en el navegador:
+
+```
+https://web.esphome.io/?dashboard_install
+```
+
+4. Seleccionar el archivo de firmware (`.bin`) generado
+5. Flashear el dispositivo directamente desde el navegador
+
+Este método:
+
+* No requiere acceso USB al servidor
+* Funciona desde cualquier PC
+* Es ideal para trabajo remoto
+
+---
+
+### 📡 Actualizaciones posteriores (OTA)
+
+Una vez realizado el flasheo inicial por USB (mediante cualquiera de las dos opciones):
+
+* El dispositivo queda habilitado para **actualizaciones OTA**
+* Los siguientes uploads se realizan **de forma inalámbrica** desde ESPHome
+* Ya no es necesario volver a conectar el ESP por USB
 
 ---
 
