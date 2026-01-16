@@ -1,48 +1,34 @@
-# **Home Assistant**
+# Home Assistant
 
-Home Assistant se utiliza como **servidor central de automatización e integración IoT** del proyecto. Corre dentro de un **contenedor Docker** en la PC servidor de la facultad.
+Home Assistant se utiliza como **una de las capas centrales de automatización y UI** del proyecto IoT. Actúa como punto de orquestación para:
+
+* Controlar dispositivos desde un **panel web** (dashboards)
+* Construir **automatizaciones** (lógica de alto nivel) a partir de datos de sensores
+* Generar **gráficas e historial** de mediciones
+* Emitir **alertas/notificaciones** ante eventos
+* Administrar **usuarios** del sistema
+
+En este proyecto Home Assistant corre en el servidor de la facultad dentro de un **contenedor Docker**.
 
 ---
 
-## 🖥️ Consideración sobre instalación nativa (Home Assistant OS)
+## Consideración sobre instalación nativa (Home Assistant OS)
 
-Durante la etapa inicial del proyecto se evaluó la posibilidad de instalar
-**Home Assistant OS de forma nativa** en una PC dedicada, con el objetivo de
-simplificar la administración y prescindir del uso de Docker.
+Durante la etapa inicial se evaluó instalar **Home Assistant OS (HAOS)** de forma nativa. Sin embargo, en la PC disponible **no fue viable** porque el equipo no cuenta con **firmware UEFI** (solo modo **BIOS/Legacy**) y la instalación nativa recomendada para HAOS está pensada para arranque UEFI.
 
-Sin embargo, esta alternativa **no pudo implementarse** debido a limitaciones
-de hardware de la PC adquirida:
+Por este motivo se adoptó una solución basada en **Docker sobre Ubuntu**, que resultó compatible con el hardware disponible y suficiente para un entorno académico y colaborativo.
 
-- El equipo **no cuenta con firmware UEFI**
-- Home Assistant OS requiere **UEFI** para su instalación y arranque nativo
-- El sistema solo soporta modo **BIOS / Legacy**, incompatible con HAOS
+---
 
-Debido a esta restricción, se decidió **descartar la instalación nativa** y
-optar por una solución basada en **Docker sobre Ubuntu**, la cual resultó:
-
-- Totalmente compatible con el hardware disponible
-- Más flexible para depuración y acceso por SSH
-- Adecuada para un entorno académico y colaborativo
-
-Esta decisión permitió continuar el proyecto sin depender de un cambio de
-hardware y manteniendo control total sobre el sistema operativo base.
+## Instalación y ejecución (Docker)
 
 La configuración persistente se almacena en el host en la ruta:
 
-```
+```txt
 /home/user/homeassistant
 ```
 
-Para administrar el sistema es necesario:
-
-1. Estar físicamente en la PC servidor **o**
-2. Conectarse por **SSH**, ya sea desde la red local de la facultad o mediante la **VPN Tailscale**.
-
----
-
-## 🐳 Ejecución del contenedor Docker
-
-El contenedor fue creado manualmente utilizando Docker, con reinicio automático ante fallos o reinicios del sistema.
+Ejecución del contenedor (con reinicio automático):
 
 ```bash
 docker run -d \
@@ -54,17 +40,16 @@ docker run -d \
   ghcr.io/home-assistant/home-assistant:stable
 ```
 
-### 📌 Notas de diseño
+### Notas
 
-* Se utiliza un **volumen bind-mounted** para preservar la configuración
-* No se versionan bases de datos, logs ni estados internos
-* El contenedor se ejecuta en modo `--privileged` para facilitar la integración con hardware y red
+* Se usa un **volumen bind-mounted** para preservar la configuración.
+* El modo `--restart unless-stopped` permite que el servicio vuelva a levantarse ante reinicios.
 
 ---
 
-## 🔧 Comandos útiles de administración
+## Comandos útiles de administración
 
-Verificar que el contenedor esté en ejecución:
+Verificar contenedores en ejecución:
 
 ```bash
 docker ps
@@ -76,13 +61,13 @@ Detener Home Assistant:
 docker stop homeassistant
 ```
 
-Iniciar nuevamente el contenedor:
+Iniciar Home Assistant:
 
 ```bash
 docker start homeassistant
 ```
 
-Ver logs del contenedor:
+Ver logs:
 
 ```bash
 docker logs homeassistant
@@ -90,47 +75,45 @@ docker logs homeassistant
 
 ---
 
-## 🌐 Acceso a Home Assistant
+## Acceso web
 
-Una vez activa la VPN Tailscale (o estando dentro de la red local de la facultad), se puede acceder mediante un navegador web.
+Formato general:
 
-### Formato general
-
-```
+```txt
 http://[IP_DEL_SERVIDOR]:8123/
 ```
 
-### Ejemplo real
+Ejemplo:
 
-```
+```txt
 http://100.109.64.19:8123/
 ```
 
 ---
 
-## 👤 Usuarios del sistema
+## Usuarios del sistema
 
 Cada integrante del proyecto dispone de un **usuario individual** en Home Assistant.
 
 Formato del nombre de usuario:
 
-```
-NOMBRE.APELLIDO
+```txt
+nombre.apellido
 ```
 
-### Ejemplo
+Ejemplo:
 
-```
+```txt
 fernando.brunetti
 ```
 
 ---
 
-## 🔑 Contraseña inicial
+## Contraseña inicial
 
-Las contraseñas iniciales se asignan con un formato estándar para facilitar el primer acceso.
+Las contraseñas iniciales se asignan con un formato estándar para facilitar el primer acceso:
 
-```
+```txt
 [nombre][DDMM]
 ```
 
@@ -139,84 +122,77 @@ Donde:
 * `nombre` está en minúsculas
 * `DDMM` corresponde al día y mes de nacimiento
 
-### Ejemplo
+Ejemplo:
 
 Usuario:
 
-```
+```txt
 fernando.brunetti
 ```
 
 Cumpleaños: 11 de noviembre →
 
-```
+```txt
 fernando1111
 ```
 
-> ⚠️ Estas credenciales son **provisorias**.
-> Cada usuario debe cambiar su contraseña en el primer inicio de sesión.
+> ⚠️ **Advertencia:** estas credenciales son provisorias. Cada usuario debe **cambiar su contraseña** en el primer inicio de sesión.
+
+---
+## Funcionalidades principales (visión general)
+
+Home Assistant aporta una capa de **supervisión, control y automatización** para la red IoT del proyecto. A nivel general, permite:
+
+* **Panel/UI web (Dashboards):** control manual de dispositivos y visualización en tiempo real.
+* **Historial y gráficas:** registro y visualización de estados/mediciones disponibles en las entidades.
+* **Automatizaciones y escenas:** creación de lógica de alto nivel basada en eventos/condiciones (por ejemplo: si un sensor supera un umbral, ejecutar una acción).
+* **Alertas y notificaciones:** avisos ante eventos relevantes (por ejemplo: estados anómalos o condiciones críticas).
+* **Gestión de usuarios y permisos:** cada integrante opera con su cuenta; el acceso es controlado.
+
+> Nota: los detalles concretos (sensores, actuadores, reglas y dashboards específicos) se documentan en cada implementación/entrega correspondiente.
 
 ---
 
-## 🔌 Integración de dispositivos ESPHome
+## Alta e incorporación de dispositivos (general)
 
-Los dispositivos desarrollados con **ESPHome** se integran de forma nativa en Home Assistant.
+Home Assistant integra dispositivos mediante **integraciones**. En términos generales, el flujo para añadir un dispositivo es:
 
-### Requisitos previos
+1. Ingresar a la interfaz web de Home Assistant.
+2. Ir a **Settings → Devices & Services**.
+3. Presionar **Add Integration**.
+4. Seleccionar la integración correspondiente (según el tipo de dispositivo/servicio).
+5. Completar el emparejamiento o configuración mínima (según lo que solicite la integración).
 
-* El nodo ESPHome debe estar **conectado a la misma red** que el servidor (red local o VPN Tailscale)
-* El dispositivo debe haber sido **compilado y flasheado** correctamente desde el entorno ESPHome
-
----
-
-### ➕ Agregar un dispositivo ESPHome
-
-1. Ingresar a Home Assistant desde el navegador
-2. Ir a:
-
-```
-Overview → +
-```
-
-3. Presionar **“Add device”**
-4. Buscar y seleccionar **ESPHome**
-
-Home Assistant detectará automáticamente los nodos ESPHome disponibles en la red.
+Al finalizar, Home Assistant creará **entidades** asociadas al dispositivo (por ejemplo: sensores, switches, actuadores, etc.).
 
 ---
 
-### 🔗 Vinculación del nodo
+## Entidades: concepto general
 
-Una vez detectado el dispositivo:
+Dentro de Home Assistant, cada dispositivo se representa mediante **entidades**, que son los “puntos de control/lectura” visibles en la UI.
 
-* Seleccionar el nodo correspondiente
-* Aceptar la integración
-* El dispositivo quedará registrado como una nueva **entidad** dentro del sistema
+Ejemplos típicos:
 
-Las entidades creadas pueden ser:
+* Un sensor de temperatura → `sensor.temperatura_*`
+* Un actuador tipo relay/switch → `switch.*`
+* Una luz → `light.*`
 
-* Sensores
-* Actuadores
-* Switches
-* Luces
-* Emisores infrarrojos, etc.
+Estas entidades se pueden:
 
----
-
-## 📊 Uso dentro de Home Assistant
-
-Una vez integrado, el dispositivo ESPHome puede:
-
-* Aparecer en **Overview**
-* Utilizarse en **Automatizaciones**
-* Ser controlado manualmente desde la interfaz web
-* Interactuar con otros dispositivos del sistema
-
-No es necesario editar manualmente archivos de configuración para esta integración básica.
+* Mostrar en dashboards
+* Usar en automatizaciones
+* Consultar su historial/gráficas
 
 ---
 
+## Automatizaciones (visión general)
 
+Las **automatizaciones** permiten definir lógica de alto nivel del tipo:
 
-**Versión del documento:** 1.1
+* **Disparador (Trigger):** qué evento inicia la automatización.
+* **Condiciones (Conditions):** filtros opcionales para decidir si se ejecuta.
+* **Acciones (Actions):** qué se ejecuta (por ejemplo, activar un switch, mandar una alerta, etc.).
 
+> Las automatizaciones específicas del proyecto se documentan en cada implementación que las utilice.
+---
+**Versión del documento:** 1.2
