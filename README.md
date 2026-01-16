@@ -1,150 +1,141 @@
-# **TPF – Telecomunicaciones II (2025)**
+# TPF – Telecomunicaciones II (2025)
 
-## **Infraestructura IoT Base – DEI/LED**
+## Red IoT Híbrida Multi-Arquitectura
 
 **Universidad Católica “Nuestra Señora de la Asunción”**
 Facultad de Ciencias y Tecnologías
 Departamento de Ingeniería Electrónica e Informática
 
----
-
-## 🎯 Objetivo del Proyecto
-
-Este repositorio documenta y centraliza la **infraestructura base** utilizada en el Trabajo Práctico Final de **Telecomunicaciones II (2025)**.
-
-El objetivo principal es **diseñar, desplegar y mantener un servidor IoT reproducible**, que permita a los estudiantes:
-
-* Desarrollar y probar sensores y actuadores
-* Integrar distintos protocolos de comunicación
-* Trabajar de forma colaborativa y remota
-* Utilizar una base común estandarizada para prácticas de laboratorio
-
-> ⚠️ **Este repositorio NO es un backup del servidor.**
-> Contiene únicamente configuraciones, scripts y documentación necesarios para **recrear el entorno**, no su estado en ejecución.
+Materia: **Telecomunicaciones II**
+Profesor: **Fernando Brunetti**
 
 ---
 
-## 🖥️ Servidor IoT de la Facultad
+## Descripción general del proyecto
 
-El servidor físico se encuentra en una PC dedicada dentro de la facultad y corre:
+Este repositorio corresponde al **Trabajo Práctico Final (TPF)** desarrollado por el **grupo de estudiantes de Telecomunicaciones II – 2025**.
 
-* **Ubuntu 24.04 LTS**
-* **Docker** como plataforma de contenedores
-* **OpenSSH Server** para administración remota
-* **VPN Tailscale** para acceso seguro desde redes externas
+El proyecto consiste en el **diseño e implementación de una red IoT híbrida y multi-arquitectura**, orientada a la **integración de sensado y actuación** mediante distintos tipos de dispositivos, protocolos y tecnologías de comunicación.
 
-Este enfoque permite:
-
-✔ Acceso remoto sin abrir puertos en el router
-✔ Trabajo desde casa de manera segura
-✔ Un único punto de integración para todos los módulos del TP
-✔ Reproducibilidad del entorno en futuros semestres
+La infraestructura desarrollada funciona como una **base común y reutilizable**, pensada no solo para este trabajo práctico, sino también como **plataforma de referencia para futuros trabajos y experiencias de la materia**.
 
 ---
 
-## 🔐 Acceso por SSH al servidor
+## Objetivo del trabajo
 
-El acceso administrativo al servidor se realiza mediante **SSH**.
+El objetivo principal es **crear una red IoT flexible y extensible** que permita:
 
-### Instalación del servidor SSH
+* Integrar dispositivos de **sensado y actuación**
+* Utilizar **múltiples tecnologías de comunicación** (WiFi y LoRa)
+* Centralizar datos en un backend común
+* Visualizar información y controlar dispositivos de forma remota
+* Facilitar el trabajo colaborativo entre estudiantes
 
-En una instalación limpia de Ubuntu, basta con ejecutar:
+---
 
-```bash
-sudo apt update
-sudo apt install openssh-server
-```
+## Arquitectura general del sistema
+<img width="960" height="720" alt="IoT_NEG_DEI_LED" src="https://github.com/user-attachments/assets/e3828d64-0867-454a-92f0-b70719c93680" />
 
-El servicio queda activo automáticamente. Para verificar:
+---
+La red implementada se basa en una **arquitectura IoT híbrida**, donde conviven:
+
+* **Dispositivos WiFi** (ESP8266, ESP32)
+* **Dispositivos LoRa** (LoRa32u4ii)
+* Un **servidor IoT central** que actúa como punto de integración
+
+Los detalles específicos de sensores, actuadores y casos de uso se documentan en las implementaciones individuales de cada alumno.
+
+---
+
+## ¿Qué es cada servicio/carpeta? (definiciones a alto nivel)
+
+> Esta sección describe **qué es** cada componente del stack.
+> El **cómo se instala/usa** está en los `README.md` de cada carpeta.
+
+* **`MQTT/`**
+  Broker y configuración asociada a **MQTT**, un sistema de mensajería **pub/sub** común en IoT para intercambiar telemetría y comandos.
+
+* **`InfluxDB/`**
+  **Base de datos de series temporales**: diseñada para almacenar mediciones indexadas por tiempo (sensores), consultas por rango y agregaciones.
+
+* **`Grafana/`**
+  Plataforma de **visualización** y creación de dashboards: consume datos (por ejemplo desde InfluxDB) y los presenta en paneles.
+
+* **`NodeRed/`**
+  Herramienta de **programación por flujos**: permite integrar fuentes/servicios, transformar datos y construir automatizaciones sin mucho código.
+
+* **`homeassistant/`**
+  Plataforma de **automatización del hogar/IoT**: integra dispositivos y servicios, permite crear reglas, escenas y control centralizado.
+
+* **`esphome/`**
+  Framework para **firmware declarativo** en ESP8266/ESP32: simplifica la creación de nodos IoT con sensores/actuadores y su integración.
+
+* **`LoRa/`**
+  Contenido relacionado a **comunicación LoRa**: pruebas, nodos y documentación vinculada a enlaces de largo alcance y bajo consumo.
+
+* **`TTN/`**
+  Integración con **The Things Network (TTN)** / ecosistema LoRaWAN: incluye configuraciones y elementos necesarios para operar dispositivos LoRaWAN.
+
+* **`Scripts/`**
+  Scripts auxiliares: utilidades para soporte, pruebas, administración o tareas repetitivas del proyecto.
+
+---
+
+## Infraestructura del servidor (soporte)
+
+El sistema se ejecuta sobre una **PC de hardware antiguo** perteneciente a la facultad, reutilizada como **servidor IoT dedicado**, corriendo **Linux**.
+
+### Nota importante
+
+El uso de **SSH, Docker y Tailscale** responde a decisiones prácticas de administración y **no constituye un objetivo evaluado del trabajo**, sino herramientas de soporte para el desarrollo del proyecto.
+
+### Acceso por SSH (uso básico)
+
+SSH permite administrar el servidor de forma remota mediante terminal.
+
+* Verificar servicio en el servidor:
 
 ```bash
 systemctl status ssh
 ```
 
-### Conexión al servidor
-
-Desde cualquier cliente:
+* Conectarse desde un cliente:
 
 ```bash
-ssh user@[IP_DEL_SERVIDOR]
+ssh user@IP_DEL_SERVIDOR
 ```
 
-Ejemplo usando IP asignada por Tailscale:
+### Acceso remoto con Tailscale (VPN)
 
-```bash
-ssh user@100.109.64.19
-```
+Tailscale crea una VPN tipo *mesh* (basada en WireGuard), permitiendo acceso remoto seguro sin exponer puertos.
 
-> ⚠️ **Buenas prácticas:**
-> En este proyecto se evita exponer el puerto SSH a Internet.
-> El acceso remoto se realiza exclusivamente a través de la VPN Tailscale.
-
----
-
-## 🌐 Acceso remoto mediante Tailscale (VPN)
-
-Para permitir el trabajo remoto desde redes domésticas sin abrir puertos, el proyecto utiliza **Tailscale**, una VPN mesh basada en **WireGuard**.
-
-### ¿Por qué Tailscale?
-
-* No requiere configuración de NAT o port forwarding
-* Funciona detrás de routers domésticos y redes móviles
-* Cada integrante se autentica con su propia identidad
-* El servidor no queda expuesto públicamente
-
-### Instalación
-
-Crear una cuenta en:
-
-👉 [https://tailscale.com](https://tailscale.com)
-
-Instalar Tailscale en cada dispositivo:
-
-* **Linux**:
-
-```bash
-curl -fsSL https://tailscale.com/install.sh | sh
-```
-
-* **Windows / macOS / Android / iOS**:
-  [https://tailscale.com/download](https://tailscale.com/download)
-
-### Activar la VPN
+* Activar en Linux:
 
 ```bash
 sudo tailscale up
 ```
 
-### Visualización de dispositivos
+* Luego se usa la IP de Tailscale para SSH:
 
-Desde el panel web:
-
-👉 [https://login.tailscale.com/admin/machines](https://login.tailscale.com/admin/machines)
-
-Se puede ver:
-
-* IP Tailscale del servidor
-* IPs de cada integrante
-* Estado de conexión (online/offline)
+```bash
+ssh user@IP_TAILSCALE
+```
 
 ---
 
-## 📂 Organización del repositorio
 
-El repositorio se organiza por módulos, cada uno con su propia documentación:
+## Alcance y proyección
 
-* **`homeassistant/`**
-  Configuración reproducible del servidor Home Assistant (Docker).
+La infraestructura desarrollada **no está pensada como un sistema cerrado**, sino como una **base extensible**, sobre la cual cada estudiante puede:
 
-* **`esphome/`**
-  Configuración de nodos ESPHome y entorno de compilación (Docker).
+* Incorporar nuevos nodos
+* Probar distintos sensores y actuadores
+* Evaluar arquitecturas de comunicación
+* Experimentar con distintos flujos de datos
 
-* **`Scripts/`**
-  Scripts y herramientas auxiliares utilizadas durante el desarrollo y las pruebas.
-
-Cada carpeta contiene su propio `README.md` con detalles específicos de uso.
+Este enfoque permite que el proyecto pueda **evolucionar en futuros semestres** y adaptarse a nuevos objetivos académicos.
 
 ---
 
-**Versión del documento:** 1.1
-
+**Trabajo Práctico Final – Telecomunicaciones II (2025)**
+Universidad Católica “Nuestra Señora de la Asunción”
