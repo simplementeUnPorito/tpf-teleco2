@@ -140,17 +140,5 @@ Este proceso permitió:
 
 ---
 
-## 🔧 Firmware auxiliar en Arduino
+**Versión del documento:** 1.1
 
-Dentro de la carpeta también se incluyen sketches de Arduino utilizados como **herramientas de laboratorio**:
-
-* Captura de señales IR
-* Emisión de códigos ON/OFF
-* Pruebas de repetibilidad
-
-Estos sketches **no forman parte del sistema final**, pero fueron esenciales para obtener los datos que luego se integraron en ESPHome.
-
-
----
-
-**Versión del documento:** 1.0
