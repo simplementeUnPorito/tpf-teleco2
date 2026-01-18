@@ -2,34 +2,62 @@
 
 ## Introducción
 
-MQTT (Message Queuing Telemetry Transport) es un protocolo de mensajería ligero basado en el modelo **publicador/suscriptor**, ampliamente utilizado en sistemas IoT por su eficiencia y simplicidad.
+MQTT es un protocolo de mensajería ligero basado en el modelo publicador/suscriptor, ampliamente utilizado en sistemas IoT por su eficiencia y bajo consumo de recursos.
 
-En este proyecto, MQTT actúa como el **núcleo de comunicación** entre el dispositivo embebido y el resto de la infraestructura.
+En este proyecto, Mosquitto actúa como broker central de comunicaciones.
 
 ---
 
 ## Rol de Mosquitto en el sistema
 
-Mosquitto cumple la función de:
+- Recibir mensajes del ESP8266.
+- Distribuirlos a Telegraf y otros clientes.
+- Desacoplar hardware y software de backend.
 
-- Recibir mensajes publicados por el ESP8266.
-- Distribuir dichos mensajes a los consumidores suscriptos.
-- Desacoplar el hardware de las capas de procesamiento y visualización.
+---
+
+## Instalación mediante Docker
+
+### Preparación del entorno
+
+1. Crear una carpeta para Mosquitto:
+mkdir mosquitto
+
+2. Crear subdirectorios necesarios:
+mkdir -p mosquitto/config mosquitto/data mosquitto/log
+
+---
+
+### Archivo de configuración básico
+
+Crear el archivo `mosquitto/config/mosquitto.conf`:
+
+listener 1883
+allow_anonymous true
+persistence true
+persistence_location /mosquitto/data
+log_dest file /mosquitto/log/mosquitto.log
+
+---
+
+### Servicio en Docker Compose
+
+En el archivo `docker-compose.yml` se define el servicio Mosquitto, exponiendo el puerto 1883 y utilizando volúmenes persistentes.
+
+---
+
+## Verificación de funcionamiento
+
+1. Iniciar el contenedor:
+docker compose up -d
+
+2. Verificar que Mosquitto esté activo:
+docker ps
+
+3. Probar publicación/suscripción básica para validar conectividad.
 
 ---
 
 ## Justificación técnica
 
-Se selecciona Mosquitto debido a:
-
-- Implementación estándar y estable.
-- Bajo consumo de recursos.
-- Compatibilidad nativa con Telegraf y Home Assistant.
-- Facilidad de despliegue mediante Docker.
-
----
-
-## Concepto de tópicos MQTT
-
-El ESP8266 publica mediciones en tópicos jerárquicos, por ejemplo:
-
+Mosquitto fue elegido por su estabilidad, compatibilidad con herramientas IoT y facilidad de despliegue en contenedores.
