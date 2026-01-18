@@ -2,48 +2,60 @@
 
 ## Introducción
 
-InfluxDB es una base de datos orientada a series temporales, optimizada para almacenar mediciones indexadas por tiempo.
+InfluxDB es una base de datos optimizada para series temporales, ideal para almacenar métricas IoT.
 
 ---
 
 ## Rol en el sistema
 
-InfluxDB almacena:
+- Almacenar mediciones del nivel de perfume.
+- Asociar cada dato a una marca temporal.
+- Permitir consultas históricas.
 
-- Nivel de perfume medido.
-- Marca temporal de cada medición.
-- Posibles campos adicionales para expansión futura.
+---
+
+## Instalación mediante Docker
+
+### Preparación
+
+1. Crear carpeta:
+mkdir influxdb
+
+2. Crear subdirectorios:
+mkdir -p influxdb/data influxdb/config
+
+
+---
+
+### Configuración inicial
+
+InfluxDB se inicializa mediante variables de entorno:
+
+- Usuario administrador
+- Organización
+- Bucket
+- Token de acceso
+
+Esto se define en `docker-compose.yml`.
+
+---
+
+### Despliegue
+
+1. Iniciar el servicio:
+docker compose up -d
+
+2. Acceder a la interfaz web:
+http://localhost:8086
+
+---
+
+## Persistencia de datos
+
+El uso de volúmenes asegura que los datos no se pierdan al reiniciar los contenedores.
 
 ---
 
 ## Justificación técnica
 
-InfluxDB es adecuada debido a:
-
-- Alta eficiencia en datos temporales.
-- Integración directa con Telegraf y Grafana.
-- Lenguaje de consulta especializado.
-- Soporte para retención de datos.
-
----
-
-## Organización de datos
-
-Los datos se estructuran en:
-
-- **Buckets**: contenedores lógicos de datos.
-- **Measurements**: tipo de medición.
-- **Fields**: valores numéricos.
-- **Tags**: metadatos descriptivos.
-
----
-
-## Despliegue en Docker
-
-InfluxDB se ejecuta en un contenedor con:
-
-- Volúmenes persistentes.
-- Configuración inicial automatizada.
-- Acceso restringido por credenciales.
-
-Este enfoque garantiza continuidad de datos ante reinicios.
+InfluxDB es ampliamente utilizado en entornos industriales y académicos para el análisis de datos temporales.
