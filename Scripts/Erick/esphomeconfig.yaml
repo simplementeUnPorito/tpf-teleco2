@@ -1,0 +1,84 @@
+esphome:
+  name: dispensador-perfumes
+  friendly_name: Dispensador Perfumes
+
+esp8266:
+  board: nodemcuv2
+
+# =========================
+# Logging / API / OTA
+# =========================
+logger:
+
+api:
+
+ota:
+
+# =========================
+# WiFi
+# =========================
+wifi:
+  ssid: "TU_WIFI"
+  password: "TU_PASSWORD"
+  # Recomendado para 2026+
+  min_auth_mode: WPA2
+
+  ap:
+    ssid: "DispensadorPerfumes-AP"
+    password: "12345678"
+
+captive_portal:
+
+# =========================
+# MQTT (publicación a Mosquitto)
+# =========================
+mqtt:
+  broker: "IP_O_HOST_DEL_SERVIDOR"   # ej: 192.168.1.50 o nombre docker si aplica en la red
+  port: 1883
+  topic_prefix: "dispensador/perfumes"
+  discovery: true
+  discovery_prefix: homeassistant
+  keepalive: 30s
+
+# =========================
+# Sensor ultrasónico HC-SR04
+# =========================
+sensor:
+  - platform: ultrasonic
+    trigger_pin: D5
+    echo_pin: D6
+    name: "Distancia Ultrasónica"
+    id: dist_ultra
+    update_interval: 1s
+    unit_of_measurement: "m"
+    accuracy_decimals: 3
+    filters:
+      - median:
+          window_size: 7
+          send_every: 1
+          send_first_at: 1
+
+  # Ejemplo: convertir distancia a "nivel" (0-100%)
+  # Ajustá: altura_sensor_m y altura_min_m según tu tanque/geom.
+  - platform: template
+    name: "Nivel Perfume (%)"
+    id: nivel_perfume
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    update_interval: 1s
+    lambda: |-
+      const float altura_sensor_m = 0.30; // altura del sensor al fondo del tanque (m)
+      const float altura_min_m    = 0.05; // distancia mínima esperada (m), tanque lleno
+      float d = id(dist_ultra).state;
+
+      if (isnan(d)) return NAN;
+
+      // clamp
+      if (d < altura_min_m) d = altura_min_m;
+      if (d > altura_sensor_m) d = altura_sensor_m;
+
+      // map inverso: cerca = lleno, lejos = vacío
+      float pct = (altura_sensor_m - d) / (altura_sensor_m - altura_min_m) * 100.0;
+      if (pct < 0) pct = 0;
+      if (pct > 100) pct = 100;
+      return pct;
