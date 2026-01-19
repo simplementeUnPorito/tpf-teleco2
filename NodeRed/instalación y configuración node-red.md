@@ -1,11 +1,11 @@
 
-## 8. Instalación y configuración de Node-RED (Windows 11)
+## 1. Instalación y configuración de Node-RED (Windows 11)
 
 Esta sección describe el procedimiento de instalación y configuración del entorno necesario para utilizar **Node-RED** en el sistema operativo **Windows 11**, incluyendo la instalación de **Node.js**, **Node-RED** y los paquetes requeridos para la integración MQTT y la visualización mediante dashboard.
 
 ---
 
-### 8.1 Instalación de Node.js (LTS)
+### 2 Instalación de Node.js (LTS)
 
 Node-RED se ejecuta sobre **Node.js**, por lo que es un requisito previo contar con este entorno instalado.
 
@@ -24,7 +24,7 @@ Si ambos comandos devuelven un número de versión, la instalación se realizó 
 
 ---
 
-### 8.2 Instalación de Node-RED
+### 3 Instalación de Node-RED
 
 Con Node.js instalado, se procede a la instalación de Node-RED mediante el gestor de paquetes npm.
 
@@ -41,14 +41,14 @@ Si el inicio es correcto, la consola mostrará mensajes indicando que el servido
 
 ---
 
-### 8.3 Acceso a la interfaz web de Node-RED
+### 4 Acceso a la interfaz web de Node-RED
 Con Node-RED en ejecución, se accede a la interfaz gráfica desde un navegador web ingresando la siguiente dirección:  http://localhost:1880/
 Esta interfaz permite crear y editar flujos mediante programación visual, arrastrando y conectando nodos.
 
 
 ---
 
-### 8.4 Instalación de paquetes adicionales en Node-RED
+### 5 Instalación de paquetes adicionales en Node-RED
 
 Para implementar la integración MQTT con TTN y la visualización de datos, es necesario instalar paquetes adicionales.
 
@@ -71,7 +71,7 @@ Estos paquetes agregan nodos específicos para la conexión a brokers MQTT y la 
 
 ---
 
-### 8.5 Verificación de la instalación
+### 6 Verificación de la instalación
 
 Una vez instalados los paquetes:
 
@@ -87,7 +87,7 @@ Con esto, el entorno Node-RED queda correctamente configurado para integrarse co
 
 ---
 
-### 8.6 Rol de Node-RED en el proyecto
+### 7 Rol de Node-RED en el proyecto
 
 En este proyecto, Node-RED actúa como una plataforma central de integración, permitiendo:
 
