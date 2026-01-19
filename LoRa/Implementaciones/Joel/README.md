@@ -34,3 +34,83 @@ IR (3 pines)	GND	GND
 • Verificar el nivel lógico del pin OUT del IR: muchos módulos entregan LOW cuando detectan objeto.
 • El DHT11 requiere un intervalo de lectura ≥ 2 s; se recomienda enviar por LoRaWAN cada 60 s o más para evitar saturación y reducir consumo.
 • Evita usar pines reservados para LoRa (según el pinmap configurado en LMIC).
+
+4 lora 32u4 II
+El Heltec LoRa32u4 II es una placa de desarrollo orientada a aplicaciones IoT de largo alcance y bajo consumo, que integra en un solo módulo un microcontrolador ATmega32u4 y un transceptor LoRa SX1276, permitiendo implementar nodos LoRaWAN de forma simple y eficiente.
+
+4.1 Microcontrolador
+
+La placa está basada en el ATmega32u4, un microcontrolador de 8 bits de la familia AVR, ampliamente utilizado en plataformas compatibles con Arduino.
+Este microcontrolador incorpora interfaz USB nativa, lo que permite la programación directa desde el Arduino IDE sin necesidad de conversores externos.
+
+Características principales:
+
+Arquitectura AVR de 8 bits
+
+Frecuencia de operación: 16 MHz
+
+Memoria Flash: 32 KB
+
+SRAM: 2.5 KB
+
+EEPROM: 1 KB
+
+4.2 Transceptor LoRa
+
+El módulo integra el Semtech SX1276, un transceptor de radio compatible con LoRa y LoRaWAN, diseñado para comunicaciones de largo alcance con muy bajo consumo energético.
+
+Características del SX1276:
+
+Bandas de operación: US902–928 MHz (utilizada en Paraguay)
+
+Modulación LoRa (Spread Spectrum)
+
+Alta sensibilidad de recepción
+
+Soporte para distintos factores de expansión (SF7–SF12)
+
+Este transceptor permite establecer enlaces confiables a varios kilómetros de distancia, dependiendo del entorno y la configuración.
+
+4.3 Compatibilidad LoRaWAN
+
+El Heltec LoRa32u4 II es totalmente compatible con LoRaWAN, pudiendo operar en modo:
+
+OTAA (Over-The-Air Activation)
+
+ABP (Activation By Personalization)
+
+En este proyecto se utiliza OTAA, gestionado mediante la librería LMIC, lo que permite la autenticación segura del dispositivo en The Things Network (TTN).
+
+4.4 Interfaz de sensores
+
+La placa dispone de múltiples pines GPIO digitales y analógicos, lo que permite la conexión directa de sensores externos como:
+
+Sensores analógicos (ej. LDR en A0)
+
+Sensores digitales (ej. DHT11, sensor IR)
+
+Módulos adicionales mediante SPI, I²C o UART
+
+4.5 Alimentación
+
+El módulo puede alimentarse mediante:
+
+USB
+
+Fuente externa (5 V)
+
+La integración del SX1276 y el bajo consumo del ATmega32u4 lo hacen adecuado para aplicaciones alimentadas por batería.
+
+4.6 Ventajas para proyectos IoT
+
+Integración MCU + LoRa en una sola placa
+
+Programación sencilla con Arduino IDE
+
+Compatibilidad directa con TTN
+
+Ideal para prototipos y proyectos académicos
+
+Amplio soporte comunitario
+
+
