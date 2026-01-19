@@ -52,7 +52,7 @@ function decodeUplink(input) {
     }
   };
 }
-
+```
 Este decoder interpreta el payload enviado por el nodo y lo convierte en datos legibles en formato JSON.
 ---
 

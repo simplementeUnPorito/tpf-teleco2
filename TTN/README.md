@@ -43,13 +43,13 @@ En este proyecto, TTN cumple las siguientes funciones:
 
 Sensores → Nodo LoRa → LoRaWAN → TTN → MQTT → Node-RED → Dashboard
 
-## 6. Configuración en The Things Network (TTN)
+## 1. Configuración en The Things Network (TTN)
 
 Esta sección documenta el proceso de creación de la aplicación en **The Things Network (TTN)**, el registro del dispositivo utilizando **OTAA** y la configuración del **payload formatter (decoder)** para interpretar los datos recibidos desde el nodo LoRaWAN.
 
 ---
 
-### 6.1 Crear aplicación
+### 1.1 Crear aplicación
 
 Accedemos a la página oficial de TTN: https://id.thethingsnetwork.org/
 
@@ -63,7 +63,7 @@ e iniciamos sesión con el usuario habilitado. Una vez dentro de la consola, seg
 
 ---
 
-### 6.2 Registrar dispositivo (OTAA)
+### 1.2 Registrar dispositivo (OTAA)
 
 Una vez creada la aplicación, procedemos a registrar el dispositivo final (End Device):
 
@@ -80,7 +80,7 @@ Estos valores serán utilizados posteriormente en el código del nodo LoRa.
 
 ---
 
-### 6.3 Payload Formatter (Uplink Decoder)
+### 1.3 Payload Formatter (Uplink Decoder)
 
 Luego de registrar el dispositivo, ingresamos a la pestaña **Payload Formatters** dentro de la aplicación y seleccionamos la opción **Custom JavaScript Formatter**.
 
@@ -101,7 +101,7 @@ function decodeUplink(input) {
 Este decoder interpreta el payload enviado por el nodo y lo convierte en datos legibles en formato JSON.
 ---
 
-### 6.4 Recepción de paquetes en TTN
+### 1.4 Recepción de paquetes en TTN
 
 Una vez finalizada la configuración del payload formatter, accedemos a la pestaña Live Data dentro de la aplicación.
 
@@ -109,14 +109,14 @@ En esta sección se deben visualizar los paquetes uplink recibidos por el gatewa
 
 ---
 
-### 7. Integración MQTT
+### 2. Integración MQTT
 
 Para el consumo y procesamiento de los datos enviados por el nodo, se utiliza el protocolo MQTT, permitiendo recibir los uplinks publicados por TTN y reenviarlos o procesarlos en sistemas externos.
 
 
 ---
 
-### 7.1 MQTT en TTN
+### 2.1 MQTT en TTN
 
 Dentro de la TTN Console, se accede a: Integrations → MQTT
 
@@ -134,7 +134,7 @@ Es necesario hacer clic en Generate new API key y guardar dicha clave, ya que se
 
 ---
 
-### 7.2 Topics recomendados
+### 2.2 Topics recomendados
 
 Los siguientes topics MQTT son utilizados para la recepción de los mensajes uplink:
 
