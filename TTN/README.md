@@ -41,3 +41,4 @@ En este proyecto, TTN cumple las siguientes funciones:
 
 ### Flujo de datos
 
+Sensores → Nodo LoRa → LoRaWAN → TTN → MQTT → Node-RED → Dashboard
