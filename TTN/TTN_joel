@@ -14,8 +14,7 @@ e iniciamos sesión con el usuario habilitado. Una vez dentro de la consola, seg
 1. Crear una nueva **Application**.
 2. Insertar el **Application ID** y el **nombre de la aplicación**.
 
-> **Figura 6:** Creación de la aplicación en TTN.  
-*(Insertar captura de pantalla correspondiente)*
+
 
 ---
 
@@ -32,8 +31,7 @@ Una vez creada la aplicación, procedemos a registrar el dispositivo final (End 
 
 Estos valores serán utilizados posteriormente en el código del nodo LoRa.
 
-> **Figura 7:** Registro del dispositivo final en TTN.  
-*(Insertar captura de pantalla correspondiente)*
+
 
 ---
 
