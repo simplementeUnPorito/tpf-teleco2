@@ -1,4 +1,4 @@
-# Trabajo Práctico – Telecomunicaciones II
+# Trabajo Práctico – Comunicaciones
 
 ## 1. Descripción general
 
@@ -420,21 +420,28 @@ Este trabajo permitió comprender:
 
 * El funcionamiento real de una red LoRaWAN.
 * La integración de TTN con MQTT.
-* El uso de Node-RED como middleware.
+* El uso de Node-RED como middleware para downlinks.
 * Las limitaciones prácticas del hardware.
 * La importancia de separar responsabilidades entre dispositivos.
 
-El sistema cumple los objetivos planteados y sirve como base para futuras ampliaciones.
+Además, la arquitectura implementada deja abierta la posibilidad de **integrar interfaces externas adicionales**, ampliando las capacidades del sistema sin modificar el nodo LoRa.
+
+Entre las integraciones posibles se destaca **Telegram**, que puede utilizarse como:
+
+* Canal de **notificaciones** (alertas de humedad baja, estado de válvula o cortina).
+* Interfaz de **control remoto**, permitiendo enviar comandos simples que luego son procesados por Home Assistant o Node-RED.
+
+Esta integración se realiza a nivel de software (Home Assistant o Node-RED), manteniendo a TTN como backend LoRaWAN y evitando exponer directamente el nodo a servicios externos. De esta forma, el sistema conserva su modularidad, seguridad y escalabilidad.
+
+La arquitectura propuesta permite incorporar nuevas interfaces de usuario o servicios de visualización sin alterar el funcionamiento básico de la red LoRaWAN.
 
 ---
 
-## 9. Notas finales
+## 10. Notas finales
 
 Este repositorio contiene:
 
 * Código del nodo LoRa.
 * Código del Arduino esclavo.
-* Flujos de Node-RED.
-* Configuración de servicios.
 
 Cualquier mejora futura puede realizarse sobre esta arquitectura base.
