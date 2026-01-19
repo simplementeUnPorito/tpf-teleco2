@@ -1,6 +1,6 @@
 # Automatización de Aire Acondicionado
 
-Este apartado detalla la configuración de la lógica de control para el aire acondicionado. Para validar el funcionamiento, se utilizaron dos automatizaciones (encendido y apagado) basadas en un entorno de simulación.
+Este apartado detalla la configuración de la lógica de control para el aire acondicionado utiliozada en este trabajo. Para validar el funcionamiento, se utilizaron dos automatizaciones (encendido y apagado) basadas en un entorno de simulación.
 
 ### Objetivo de la Configuración
 La intención principal fue crear un sistema de pruebas utilizando un **sensor de temperatura ficticio** generado en un nodo virtual con ESPHome. Esto permitió simular variaciones de temperatura (subidas y bajadas graduales) para verificar que las automatizaciones se activen exactamente cuando se alcanzan los umbrales definidos, sin depender de las condiciones ambientales reales del momento.
