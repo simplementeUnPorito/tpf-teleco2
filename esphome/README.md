@@ -360,6 +360,27 @@ Esperar a que finalice la instalación.
 Si todo salió correctamente, el Dashboard de ESPHome most
 
 
+
+
+
+# Flasheo OTA y Gestión de ESPHome:
+
+El proceso de grabar un nuevo archivo .yaml desde el dashboard del navegador se basa en la tecnología OTA (Over-The-Air), la cual permite actualizar el firmware del ESP8266 a través de la red Wi-Fi sin necesidad de una conexión física por USB. Cuando se presiona el botón "Install" y se selecciona la opción inalámbrica, el dashboard compila el código en un archivo binario y lo envía al dispositivo mediante un puerto de red específico (por defecto el 8266). El firmware actual del dispositivo recibe estos datos, los almacena temporalmente en una sección libre de su memoria flash y, tras verificar que el archivo es correcto, reinicia el sistema para ejecutar la nueva versión del código de forma inmediata.
+
+
+<img width="727" height="576" alt="esphome_part8" src="https://github.com/user-attachments/assets/7b6a3f5f-0034-4883-9775-5b09e47f9b3c" />
+
+
+
+Esta funcionalidad requiere que el archivo .yaml original incluya el componente ota:, que actúa como el receptor de estas actualizaciones. Sin este componente, el dispositivo no sabría cómo escuchar las peticiones de flasheo inalámbrico y quedaría bloqueado para futuras actualizaciones por aire, obligando al usuario a volver al cable USB. Es una herramienta fundamental en entornos de desarrollo porque permite iterar cambios en el código, ajustar sensores o modificar calibraciones de forma remota, siempre que el dispositivo mantenga una conexión estable a la misma red local que el servidor donde corre el dashboard.
+
+En el caso de instalaciones tipo Home Assistant Container, la ausencia de la pestaña de Add-ons y la imposibilidad de flashear directamente desde la interfaz de HA se debe a la arquitectura de aislamiento de Docker. Al ejecutarse como un contenedor independiente, Home Assistant no tiene permisos ni acceso al sistema de archivos o a las herramientas de compilación necesarias para gestionar el ecosistema de ESPHome por sí mismo. En este modelo, cada programa funciona en su propia "caja" cerrada, lo que impide que HA instale complementos internos; por lo tanto, el usuario debe gestionar el dashboard de ESPHome como una entidad separada en el navegador, manteniendo una independencia total entre la visualización de datos y la gestión del hardware.
+
+
+
+
+
+
 ## Alcance de esta documentación
 
 Este README describe **qué es ESPHome** en el proyecto y la **estructura general** de configuración.
