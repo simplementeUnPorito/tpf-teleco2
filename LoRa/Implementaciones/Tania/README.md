@@ -1,4 +1,4 @@
-# Trabajo Práctico – Comunicaciones
+# Trabajo Práctico – Telecomunicaciones II
 
 ## 1. Descripción general
 
