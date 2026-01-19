@@ -1,3 +1,4 @@
+
 ## 8. Instalación y configuración de Node-RED (Windows 11)
 
 Esta sección describe el procedimiento de instalación y configuración del entorno necesario para utilizar **Node-RED** en el sistema operativo **Windows 11**, incluyendo la instalación de **Node.js**, **Node-RED** y los paquetes requeridos para la integración MQTT y la visualización mediante dashboard.
