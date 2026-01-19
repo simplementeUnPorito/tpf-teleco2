@@ -41,6 +41,7 @@ También imprime por Serial cuándo se envía cada frame.
 
 **Objetivo:** probar el envío repetido de un comando específico (por ejemplo, ON) y validar que el receptor lo tome de forma consistente.
 
+
 ---
 
 ## Requisitos
@@ -78,3 +79,15 @@ reproduce exactamente esa temporización.
 
 ---
 
+## Programa 3 — Sensor HC-SR04
+
+Este conjunto de scripts permite medir la distancia de objetos utilizando un sensor de ultrasonido **HC-SR04** conectado a un **ESP8266**, enviando los datos en tiempo real a un broker **MQTT** a través de Wi-Fi.
+
+### Funcionamiento
+* **Sensor HC-SR04**: Emite una señal ultrasónica y mide el tiempo que tarda en retornar tras rebotar en un objeto para calcular la distancia.
+* **Conectividad**: El ESP8266 se conecta a la red local mediante Wi-Fi.
+* **Protocolo MQTT**: Los datos de distancia se publican en un "topic" específico, permitiendo que Home Assistant u otros servicios se suscriban para visualizar o actuar según la medición.
+
+### Archivos
+* **`sensor_hcsr04.ino`**: Código principal que gestiona la conexión Wi-Fi, el cliente MQTT y el ciclo de lectura/envío.
+* **`sensor.h`** (Recomendado): Archivo separado para definir las credenciales de Wi-Fi y la dirección del servidor MQTT, manteniendo el código principal limpio y seguro.
