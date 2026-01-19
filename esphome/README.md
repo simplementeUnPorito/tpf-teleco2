@@ -361,7 +361,7 @@ Si todo salió correctamente, el Dashboard de ESPHome most
 
 
 
-
+---
 
 # Flasheo OTA y Gestión de ESPHome:
 
