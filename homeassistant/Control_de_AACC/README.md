@@ -6,6 +6,9 @@ Para lograr el control remoto de un aire acondicionado marca Tokyo, se decidió 
 
 En una primera etapa, utilizamos un receptor infrarrojo modelo TL1838, conectado a un Arduino Uno. Para garantizar un funcionamiento correcto del sensor, se siguieron las recomendaciones especificadas en el datasheet del TL1838, implementando el circuito acondicionador correspondiente, incluyendo la correcta alimentación, desacople y conexión de salida del receptor.
 
+<img width="892" height="317" alt="ir_receiver_circuit" src="https://github.com/user-attachments/assets/6297fcb5-ada0-406f-b198-8f8015558512" />
+
+
 Posteriormente, mediante el Arduino IDE, se desarrolló un programa que permitió capturar los pulsos infrarrojos emitidos por el control remoto original del aire acondicionado. El programa fue configurado para medir los tiempos de encendido y apagado de la señal (pulsos raw) y mostrarlos por el monitor serial, expresados en microsegundos. De esta forma, fue posible observar y registrar la secuencia completa de la señal infrarroja asociada al comando de encendido/apagado del equipo.
 
 Una vez obtenidos los datos crudos de la señal, estos fueron copiados y analizados, realizando los ajustes necesarios para asegurar la correcta alternancia de pulsos positivos y negativos, así como la coherencia temporal de los valores. Luego, la señal procesada fue incorporada al archivo de configuración .yaml utilizado en ESPHome.
