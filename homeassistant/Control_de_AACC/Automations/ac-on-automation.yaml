@@ -1,0 +1,23 @@
+alias: AC-ON Automation
+description: ""
+triggers:
+  - trigger: numeric_state
+    entity_id:
+      - sensor.nodo_virtual_temperatura
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+    above: 26
+conditions:
+  - condition: state
+    entity_id: input_boolean.control_automatico_aire
+    state:
+      - "on"
+    enabled: true
+actions:
+  - type: turn_on
+    device_id: 067aab184b3c3da12106f9e762635c89
+    entity_id: f2da217e5e4c38c325b98e46b083f3ce
+    domain: switch
+mode: single
