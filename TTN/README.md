@@ -59,8 +59,7 @@ e iniciamos sesión con el usuario habilitado. Una vez dentro de la consola, seg
 1. Crear una nueva **Application**.
 2. Insertar el **Application ID** y el **nombre de la aplicación**.
 
-> **Figura 6:** Creación de la aplicación en TTN.  
-*(Insertar captura de pantalla correspondiente)*
+
 
 ---
 
@@ -77,8 +76,7 @@ Una vez creada la aplicación, procedemos a registrar el dispositivo final (End 
 
 Estos valores serán utilizados posteriormente en el código del nodo LoRa.
 
-> **Figura 7:** Registro del dispositivo final en TTN.  
-*(Insertar captura de pantalla correspondiente)*
+
 
 ---
 
@@ -145,5 +143,6 @@ Uplink por dispositivo: v3/<app>@<tenant>/devices/<device_id>/up
 Uplink para todos los dispositivos de la aplicación: v3/<app>@<tenant>/devices/+/up
 
 Estos topics permiten suscribirse a los mensajes enviados por uno o varios dispositivos registrados en la aplicación TTN.
+
 
 
