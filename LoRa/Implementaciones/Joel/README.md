@@ -13,6 +13,7 @@ Flujo de datos: Sensores → Heltec LoRa32u4 → LoRaWAN OTAA → TTN → MQTT �
 2. Materiales y componentes
    
 Componentes principales:
+
 •	Placa Heltec LoRa32u4 v1.1 (ATmega32u4 + SX1276).
 •	Sensor LDR (módulo o divisor resistivo) conectado a entrada analógica A0.
 •	Sensor DHT11 (3 pines: VCC, GND, DATA).
@@ -22,6 +23,7 @@ Componentes principales:
 •	Gateway LoRaWAN compatible con TTN (US915 en Paraguay).
 
 4. Conexiones eléctricas
+   
 Las conexiones propuestas a continuación están pensadas para no interferir con el módulo LoRa 
 Dispositivo	Pin del sensor	Pin en Heltec LoRa32u4 v1.1
 LDR	OUT/Señal	A0
@@ -35,11 +37,13 @@ IR (3 pines)	VCC	5V
 IR (3 pines)	GND	GND
 
 3.1 Notas importantes
+
 • Verificar el nivel lógico del pin OUT del IR: muchos módulos entregan LOW cuando detectan objeto.
 • El DHT11 requiere un intervalo de lectura ≥ 2 s; se recomienda enviar por LoRaWAN cada 60 s o más para evitar saturación y reducir consumo.
 • Evita usar pines reservados para LoRa (según el pinmap configurado en LMIC).
 
 4 lora 32u4 II
+
 El Heltec LoRa32u4 II es una placa de desarrollo orientada a aplicaciones IoT de largo alcance y bajo consumo, que integra en un solo módulo un microcontrolador ATmega32u4 y un transceptor LoRa SX1276, permitiendo implementar nodos LoRaWAN de forma simple y eficiente.
 
 4.1 Microcontrolador
@@ -116,6 +120,7 @@ Compatibilidad directa con TTN
 Ideal para prototipos y proyectos académicos
 
 Amplio soporte comunitario
+
 
 
 
