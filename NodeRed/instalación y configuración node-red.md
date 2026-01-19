@@ -18,7 +18,7 @@ Los pasos seguidos fueron los siguientes:
 ```bash
 node -v
 npm -v
-
+```
 Si ambos comandos devuelven un número de versión, la instalación se realizó correctamente.
 
 
