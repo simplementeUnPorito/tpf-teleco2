@@ -146,3 +146,16 @@ La integración del SX1276 y el bajo consumo del ATmega32u4 lo hacen adecuado pa
 - Ideal para **prototipos y proyectos académicos**
 - Amplio soporte comunitario
 
+---
+
+## 5 Conclusión sobre la selección de LoRa
+
+La tecnología LoRa fue seleccionada para el desarrollo de este trabajo práctico debido a su idoneidad para aplicaciones IoT de bajo consumo y largo alcance, características fundamentales para sistemas de monitoreo y sensado distribuido. A diferencia de otras tecnologías inalámbricas de corto alcance como Wi-Fi o Bluetooth, LoRa permite transmitir datos a grandes distancias con un consumo energético significativamente menor, lo que resulta especialmente ventajoso para nodos alimentados por batería.
+
+Asimismo, LoRa opera en bandas libres de licencia, lo que reduce costos de implementación y facilita su adopción en entornos académicos y experimentales. La combinación de LoRa con el protocolo LoRaWAN proporciona además mecanismos de seguridad, gestión de red y escalabilidad, permitiendo la autenticación segura de los dispositivos y la integración con infraestructuras de red como The Things Network (TTN).
+
+En el contexto de este trabajo práctico, LoRa demostró ser una solución adecuada para la transmisión periódica de datos de sensores (luz, temperatura, humedad y detección de objetos), donde la tasa de datos requerida es baja pero la confiabilidad y el alcance son prioritarios. La integración con MQTT y Node-RED permitió además validar un flujo completo de datos desde el nodo físico hasta una plataforma de visualización, reforzando el carácter práctico y formativo del proyecto.
+
+En conclusión, la elección de LoRa se justifica por su eficiencia energética, gran alcance, facilidad de integración y compatibilidad con arquitecturas IoT modernas, convirtiéndola en una tecnología adecuada y coherente con los objetivos planteados en este trabajo práctico.
+
+
