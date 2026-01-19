@@ -77,4 +77,104 @@ El uso de Node-RED resultó conveniente por las siguientes razones:
 
 Node-RED permitió implementar una solución completa de integración para el proyecto, actuando como intermediario entre **TTN (MQTT)** y la **visualización final**, logrando un flujo funcional y verificable desde los sensores físicos hasta el dashboard en tiempo real, con posibilidad de expansión a futuras integraciones.
 
+# Anexo- Guia de instalación
 
+## 1. Instalación y configuración de Node-RED (Windows 11)
+
+Esta sección describe el procedimiento de instalación y configuración del entorno necesario para utilizar **Node-RED** en el sistema operativo **Windows 11**, incluyendo la instalación de **Node.js**, **Node-RED** y los paquetes requeridos para la integración MQTT y la visualización mediante dashboard.
+
+---
+
+### 1.1 Instalación de Node.js (LTS)
+
+Node-RED se ejecuta sobre **Node.js**, por lo que es un requisito previo contar con este entorno instalado.
+
+Los pasos seguidos fueron los siguientes:
+
+1. Descargar la versión **LTS (Long Term Support)** de Node.js desde el sitio oficial: https://nodejs.org/
+2. Ejecutar el instalador y completar la instalación utilizando las **opciones por defecto**.
+3. Una vez finalizada la instalación, abrir la consola de comandos (**CMD**) y verificar la correcta instalación ejecutando:
+
+```bash
+node -v
+npm -v
+```
+Si ambos comandos devuelven un número de versión, la instalación se realizó correctamente.
+
+
+---
+
+### 1.2 Instalación de Node-RED
+
+Con Node.js instalado, se procede a la instalación de Node-RED mediante el gestor de paquetes npm.
+
+Abrir la consola de comandos (CMD) con permisos de usuario.
+
+Ejecutar el siguiente comando para instalar Node-RED de forma global:
+npm install -g --unsafe-perm node-red
+
+Una vez finalizada la instalación, iniciar Node-RED ejecutando:
+node-red
+
+Si el inicio es correcto, la consola mostrará mensajes indicando que el servidor está activo y escuchando conexiones.
+
+
+---
+
+### 1.3 Acceso a la interfaz web de Node-RED
+Con Node-RED en ejecución, se accede a la interfaz gráfica desde un navegador web ingresando la siguiente dirección:  http://localhost:1880/
+Esta interfaz permite crear y editar flujos mediante programación visual, arrastrando y conectando nodos.
+
+
+---
+
+### 1.4 Instalación de paquetes adicionales en Node-RED
+
+Para implementar la integración MQTT con TTN y la visualización de datos, es necesario instalar paquetes adicionales.
+
+El procedimiento fue el siguiente:
+
+En la interfaz web de Node-RED, hacer clic en el menú superior derecho (ícono de tres líneas).
+
+Seleccionar la opción Manage palette.
+
+Ingresar a la pestaña Install.
+
+Buscar e instalar los siguientes paquetes:
+
+node-red-node-mqtt
+
+node-red-dashboard
+
+Estos paquetes agregan nodos específicos para la conexión a brokers MQTT y la creación de dashboards interactivos.
+
+
+---
+
+### 1.5 Verificación de la instalación
+
+Una vez instalados los paquetes:
+
+Deben aparecer nodos mqtt in / mqtt out en la paleta.
+
+Deben aparecer nodos ui_gauge, ui_chart, ui_text, entre otros, correspondientes al dashboard.
+
+El dashboard estará disponible en: http://localhost:1880/ui
+
+
+Con esto, el entorno Node-RED queda correctamente configurado para integrarse con TTN vía MQTT y visualizar los datos del proyecto.
+
+
+---
+
+### 1.6 Rol de Node-RED en el proyecto
+
+En este proyecto, Node-RED actúa como una plataforma central de integración, permitiendo:
+
+Recibir los datos enviados por el nodo LoRaWAN a través de MQTT.
+
+Procesar y separar las variables de los sensores.
+
+Visualizar los datos en tiempo real mediante un dashboard web.
+
+Facilitar futuras ampliaciones del sistema sin modificar el firmware del nodo.
