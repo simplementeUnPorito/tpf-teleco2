@@ -1,0 +1,71 @@
+# Nodo Virtual - rampa - prueba para control de AACC:
+
+esphome:
+  name: nodo-virtual
+  friendly_name: nodo-virtual
+
+esp8266:
+  board: esp01_1m
+
+# Enable logging
+logger:
+
+ota:
+  - platform: esphome
+    password: "0269ef18412156e294badeaea850e58d"
+
+wifi:
+  ssid: "EstudiantesCYT"
+  password: ""  # Red abierta, sin contraseña
+  ap:
+    ssid: "Nodo-Virtual Fallback Hotspot"
+    password: "8J67NBXe3fQl"
+
+captive_portal:
+
+# CONFIGURACIÓN MQTT
+mqtt:
+  broker: 10.20.2.60   # IP del Mosquitto
+  port: 1883
+  topic_prefix: "MF/nodo_virtual"
+
+# SENSOR VIRTUAL (Simulación)
+sensor:
+  - platform: template
+    name: "Temperatura"
+    id: temp_virtual
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    lambda: |-
+      static float temp = 22.0;
+      static bool subiendo = true;
+      if (subiendo) {
+        temp += 0.5;
+        if (temp >= 29.0) subiendo = false;
+      } else {
+        temp -= 0.5;
+        if (temp <= 21.0) subiendo = true;
+      }
+      return temp;
+    update_interval: 10s
+
+  - platform: uptime
+    name: "Tiempo Activo"
+    unit_of_measurement: "min"
+    update_interval: 60s
+    filters:
+      - lambda: return x / 60.0;
+
+# VARIABLES GLOBALES
+globals:
+  - id: random_id
+    type: float
+    restore_value: no
+
+# INTERVALO DE ACTUALIZACIÓN
+interval:
+  - interval: 10s
+    then:
+      - lambda: id(random_id) = random();
+
