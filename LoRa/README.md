@@ -74,6 +74,6 @@ Por estas razones, se optó por utilizar la **LoRa32u4 II** como nodo LoRa del s
 
 Para programar el LoRa32u4 II se utiliza el entorno Arduino IDE, aprovechando la compatibilidad del microcontrolador ATmega32u4 con las placas tipo Feather.
 
-Es necesario agregar el gestor de placas de Adafruit en las preferencias del Arduino IDE, lo que permite acceder a las definiciones de placas compatibles. Una vez agregado este repositorio, se selecciona la placa “Adafruit Feather 32u4” desde el Board Manager.
+Es necesario agregar el gestor de placas de Adafruit en las preferencias del Arduino IDE, lo que permite acceder a las definiciones de placas compatibles. Una vez agregado este repositorio, se selecciona la placa “Adafruit Feather 32u4” desde el Board Manager, si no se encuentra entrar Arduino's IDE Preferences-?Additional Boards Manager, añádir la URL : https://adafruit.github.io/arduino-board-index/package_adafruit_index.json.
 
 Esta selección es correcta debido a que el LoRa32u4 II comparte el mismo microcontrolador y disposición básica de pines con dicha placa. Tras esta configuración, el proceso de compilación y carga del firmware se realiza de manera estándar, sin requerir herramientas adicionales.
