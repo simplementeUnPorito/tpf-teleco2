@@ -1,4 +1,8 @@
-# ESPHome
+# Tutorial práctico de ESPHome en Windows
+
+A continuación se presenta un tutorial paso a paso sobre la instalación y el uso práctico de ESPHome en un entorno Windows, utilizando Python, pip y el Dashboard local.
+El procedimiento se realiza de manera local y manual, sin el uso de contenedores Docker, y describe el flujo de trabajo utilizado durante el desarrollo, incluyendo decisiones prácticas y resolución de problemas comunes.
+
 
 ## Instalación de Python en Windows
 
