@@ -154,7 +154,7 @@ Esta separación mejora:
 
 ---
 
-## 8. Servicios utilizados
+## 7. Servicios utilizados
 
 ### 7.1 Mosquitto (MQTT)
 
