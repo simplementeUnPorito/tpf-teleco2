@@ -99,7 +99,7 @@ function decodeUplink(input) {
     }
   };
 }
-
+```
 Este decoder interpreta el payload enviado por el nodo y lo convierte en datos legibles en formato JSON.
 ---
 
@@ -145,4 +145,5 @@ Uplink por dispositivo: v3/<app>@<tenant>/devices/<device_id>/up
 Uplink para todos los dispositivos de la aplicación: v3/<app>@<tenant>/devices/+/up
 
 Estos topics permiten suscribirse a los mensajes enviados por uno o varios dispositivos registrados en la aplicación TTN.
+
 
