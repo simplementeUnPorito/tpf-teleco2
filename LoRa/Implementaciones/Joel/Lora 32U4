@@ -1,3 +1,4 @@
+
 1. Resumen del proyecto
 Este documento describe paso a paso la implementación de un nodo IoT basado en LoRaWAN utilizando la placa Heltec LoRa32u4 v1.1. El nodo mide nivel de luz (LDR), temperatura y humedad (DHT11) y detección por infrarrojo (emisor–receptor con salida digital). Los datos se envían por LoRaWAN mediante OTAA a The Things Network (TTN) y luego se consumen por MQTT e integración en Node-RED para visualización en dashboard.
 
